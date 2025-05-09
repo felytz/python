@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#SBATCH --nodes=1                  #numero de nodos (maximo 13)
+#SBATCH --job-name=RN2024          #nombre del job
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=12:00:00            #tiempo de ejecucion (maximo 168 hrs)
+#SBATCH --partition=general        #cola de slurm
+#SBATCH --constraint=broadwell
+
+module load conda
+source activate tf_15_env
+
+tensorflowjs_converter \
+    --input_format=tf_saved_model \
+    --output_format=tfjs_graph_model \
+    cnn_model \
+    cnn_tfjs_model
